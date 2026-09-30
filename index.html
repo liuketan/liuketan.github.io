@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kexin Liu</title>
+<meta name="description" content="Kexin Liu — Ph.D. student in Biostatistics and Data Science at Tulane University, working on AI for wearable cardiac sensing and statistical methods for clinical research.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e6b67'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' fill='white' text-anchor='middle'%3EKL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --surface-2: #f2efe8;
+    --text: #1d1f23;
+    --muted: #5d6068;
+    --line: #e4e0d7;
+    --accent: #0e6b67;
+    --accent-soft: #e2f0ee;
+    --warm: #c85a26;
+    --warm-soft: #fbe9df;
+    --shadow: 0 1px 2px rgba(20, 20, 20, .04), 0 8px 24px rgba(20, 20, 20, .06);
+    --radius: 14px;
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121416;
+      --surface: #1a1d20;
+      --surface-2: #22262a;
+      --text: #eceae6;
+      --muted: #a4a7ad;
+      --line: #2e3337;
+      --accent: #5cc2b9;
+      --accent-soft: #173331;
+      --warm: #f0915f;
+      --warm-soft: #3a2419;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121416;
+    --surface: #1a1d20;
+    --surface-2: #22262a;
+    --text: #eceae6;
+    --muted: #a4a7ad;
+    --line: #2e3337;
+    --accent: #5cc2b9;
+    --accent-soft: #173331;
+    --warm: #f0915f;
+    --warm-soft: #3a2419;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: Newsreader, Georgia, serif; font-weight: 600; line-height: 1.2; margin: 0; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+  .brand { font-family: Newsreader, Georgia, serif; font-size: 1.3rem; font-weight: 600; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    display: block; padding: 6px 10px; border-radius: 8px;
+    color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface-2); }
+  .nav-tools { display: flex; align-items: center; gap: 6px; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--text); cursor: pointer;
+    display: inline-grid; place-items: center;
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .menu-btn { display: none; }
+  @media (max-width: 900px) {
+    .menu-btn { display: inline-grid; }
+    .nav-links {
+      display: none; position: absolute; left: 0; right: 0; top: 60px;
+      flex-direction: column; padding: 8px 16px 16px;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 10px 12px; font-size: 1rem; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero { padding-top: 72px; padding-bottom: 56px; display: grid; gap: 28px; }
+  .portrait { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); max-width: 480px; aspect-ratio: 4 / 3; }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 35% 30%; }
+  @media (min-width: 860px) {
+    .hero { grid-template-columns: 1fr 340px; align-items: center; gap: 56px; }
+    .portrait { grid-column: 2; grid-row: 1; max-width: none; aspect-ratio: 955 / 1000; }
+    .hero-text { grid-column: 1; grid-row: 1; }
+  }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(2.6rem, 7vw, 4.2rem); margin: 10px 0 14px; letter-spacing: -.01em; }
+  .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 720px; margin: 0; }
+  .hero .lede strong { color: var(--text); font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 10px; font-weight: 500; font-size: .95rem;
+    text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn.primary { color: #0b1c1b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0b1c1b; } }
+  .btn svg { width: 16px; height: 16px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 32px; color: var(--muted); font-size: .92rem; }
+  .facts span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--warm); margin-right: 8px; vertical-align: middle; }
+
+  /* ---------- sections ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: clamp(1.7rem, 4vw, 2.2rem); }
+  .sec-head p { margin: 0; color: var(--muted); max-width: 560px; }
+  .sub { font-family: Inter, sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 36px 0 14px; }
+  .sub:first-of-type { margin-top: 0; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px; box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 1.22rem; margin-bottom: 8px; }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
+  .card ul { margin: 0 0 12px; padding-left: 18px; color: var(--muted); font-size: .95rem; }
+  .card li + li { margin-top: 4px; }
+  .metric { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+  .metric b {
+    font-weight: 600; font-size: .85rem; padding: 4px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: .78rem; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+  .card.feature { grid-column: 1 / -1; }
+  @media (min-width: 900px) { .card.feature { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; } }
+
+  /* ---------- timeline ---------- */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px dashed var(--line); }
+  .timeline li:last-child { border-bottom: 0; }
+  .when { color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; padding-top: 3px; }
+  .timeline h3 { font-size: 1.15rem; }
+  .org { color: var(--accent); font-weight: 500; font-size: .95rem; margin: 2px 0 6px; }
+  .timeline p { margin: 0; color: var(--muted); font-size: .95rem; }
+  @media (max-width: 640px) { .timeline li { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* ---------- publications ---------- */
+  .pubs { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .pubs li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .pubs .title { font-weight: 600; }
+  .pubs .meta { color: var(--muted); font-size: .92rem; }
+  .pubs .me { color: var(--text); font-weight: 600; }
+  .badge { font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--warm-soft); color: var(--warm); margin-right: 6px; vertical-align: 2px; }
+
+  /* ---------- skills + languages ---------- */
+  .skills { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .skills h3 { font-size: 1.05rem; margin-bottom: 10px; }
+  .lang { display: grid; gap: 14px; }
+  .lang-row { display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 12px; font-size: .95rem; }
+  .lang-row .lvl { color: var(--muted); font-size: .88rem; min-width: 64px; text-align: right; }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 100%; max-width: 30px; height: 8px; border-radius: 4px; background: var(--surface-2); }
+  .dots i.on { background: var(--accent); }
+
+  /* ---------- hobbies ---------- */
+  .hobbies { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) {
+    .hobbies { grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(4, 170px) auto; }
+    .h-trail { grid-column: 1 / span 2; grid-row: 1 / span 4; }
+    .h-summit { grid-column: 3 / span 4; grid-row: 1 / span 2; }
+    .h-marathon { grid-column: 3 / span 2; grid-row: 3 / span 2; }
+    .h-climb { grid-column: 5 / span 2; grid-row: 3 / span 2; }
+    .h-note { grid-column: 1 / -1; grid-row: 5; }
+  }
+  .hobby {
+    position: relative; overflow: hidden; border-radius: var(--radius);
+    background: var(--surface-2); border: 1px solid var(--line); margin: 0; min-height: 280px;
+  }
+  @media (min-width: 760px) { .hobby { min-height: 0; } }
+  .hobby img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .hobby:hover img { transform: scale(1.03); }
+  @media (prefers-reduced-motion: reduce) { .hobby img { transition: none; } .hobby:hover img { transform: none; } }
+  .h-trail img { object-position: 50% 40%; }
+  .h-summit img { object-position: 50% 45%; }
+  .h-climb img { object-position: 40% 50%; }
+  .hobby figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 16px;
+    background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0)); color: #fff;
+  }
+  .hobby figcaption h3 { font-size: 1.3rem; }
+  .hobby figcaption p { margin: 2px 0 0; font-size: .9rem; opacity: .92; }
+  /* Summit log: right-hand panel over the clouds on wide screens, below the photo on phones */
+  @media (min-width: 760px) {
+    .h-summit figcaption {
+      left: auto; top: 0; width: 40%; padding: 18px 20px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background: linear-gradient(to left, rgba(0,0,0,.66), rgba(0,0,0,.4) 70%, rgba(0,0,0,0));
+    }
+    .h-summit .chips { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 759px) {
+    .h-summit { display: flex; flex-direction: column; min-height: 0; }
+    .h-summit img { height: 260px; }
+    .h-summit figcaption { position: static; background: var(--surface); color: var(--text); padding: 16px 18px 18px; }
+    .h-summit figcaption p { color: var(--muted); opacity: 1; }
+    .h-summit .chips > * { color: var(--text); background: var(--surface-2); border-color: var(--line); backdrop-filter: none; }
+  }
+  .h-marathon {
+    background: var(--warm-soft); border-color: transparent;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 22px;
+  }
+  .h-marathon svg { width: 44px; height: 44px; color: var(--warm); }
+  .h-marathon .big { font-family: Newsreader, Georgia, serif; font-size: 2.1rem; font-weight: 600; color: var(--warm); line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .h-marathon h3 { font-size: 1.3rem; margin: 0 0 10px; }
+  .pbs { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 10px; }
+  .pbs span { font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 10px 0 0; padding: 0; }
+  .chips > * {
+    font-size: .78rem; font-weight: 500; padding: 3px 10px; border-radius: 999px;
+    background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .28);
+    backdrop-filter: blur(4px); color: #fff;
+  }
+  .h-marathon p { margin: 0; color: var(--muted); font-size: .92rem; }
+  .h-note {
+    display: flex; align-items: center; padding: 20px 24px; background: var(--surface); min-height: 0;
+  }
+  .h-note p { margin: 0; font-family: Newsreader, Georgia, serif; font-size: 1.2rem; line-height: 1.45; }
+
+  /* ---------- contact / footer ---------- */
+  .contact { display: flex; flex-wrap: wrap; gap: 10px; }
+  footer { padding: 28px 0 40px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Kexin Liu</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#outdoors">Outdoors</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle color theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <figure class="portrait">
+      <img src="assets/img/portrait.jpg" alt="Kexin Liu smiling on a red sandstone boulder with a hiking pack, rock spires and pine trees behind" width="955" height="1000">
+    </figure>
+    <div class="hero-text">
+    <div class="eyebrow">Ph.D. Student · Biostatistics &amp; Data Science · Tulane University</div>
+    <h1>Kexin Liu</h1>
+    <p class="lede">
+      I build <strong>machine learning for digital health</strong>, from foundation-model analysis of single-lead ECGs to
+      wearable PPG signal processing in cardiac patients, and develop the <strong>statistical methods</strong> that make
+      clinical conclusions trustworthy: causal inference, survival analysis, and rigorous model validation.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:kliu15@tulane.edu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email me
+      </a>
+      <a class="btn" href="assets/Kexin_Liu_CV.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 17h4"/></svg>
+        CV (PDF)
+      </a>
+      <a class="btn" href="https://www.linkedin.com/in/kexin-liu-b0515134b/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/liuketan" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="facts">
+      <span>New Orleans, LA</span>
+      <span>Seeking Summer 2027 internships in digital health AI/ML &amp; biostatistics</span>
+    </div>
+    </div>
+  </div>
+
+  <!-- ================= RESEARCH ================= -->
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Research</h2>
+        <p>Research Assistant at TRIAD, Tulane University School of Medicine, plus methods work in causal inference and survival analysis.</p>
+      </div>
+
+      <h3 class="sub">Digital health AI</h3>
+      <div class="grid">
+        <article class="card feature">
+          <div>
+            <h3>Foundation-model LVEF assessment from portable single-lead ECGs (DECAAF II)</h3>
+            <p>An end-to-end pipeline that combines frozen ECGFounder embeddings, repeated-recording pooling, multitask
+              prediction, and clinical covariates to detect reduced left ventricular ejection fraction after AF ablation.</p>
+            <ul>
+              <li>Repeated patient-level nested cross-validation, cross-fitted stacking, and calibration.</li>
+              <li>Sensitivity analyses across cardiac rhythm, recording windows, and clinical covariates.</li>
+              <li>Echo-prioritization rules and decision-curve analysis; locked pipeline applied to 15 external patients (exploratory).</li>
+            </ul>
+          </div>
+          <div>
+            <div class="metric">
+              <b>AUROC 0.908 · LVEF ≤40%</b>
+              <b>AUROC 0.857 · LVEF &lt;50%</b>
+              <b>MAE 5.09 pts</b>
+              <b>n = 359</b>
+            </div>
+            <p>Manuscript and HRS abstract in preparation.</p>
+            <div class="tags"><span class="tag">ECG</span><span class="tag">Foundation models</span><span class="tag">PyTorch</span><span class="tag">Calibration</span><span class="tag">Atrial fibrillation</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Wearable PPG and incident heart failure</h3>
+          <p>Linked longitudinal wearable PPG recordings with EHR follow-up to study physiological change before heart-failure onset.</p>
+          <ul>
+            <li>Signal-quality and pulse-interval feature workflows at 25/100 Hz (pulse rate, interval variability, RMSSD, sample entropy).</li>
+            <li>Diagnosed timestamp artifacts; designed within-person pre/post-HF comparisons.</li>
+          </ul>
+          <div class="tags"><span class="tag">PPG</span><span class="tag">Signal processing</span><span class="tag">EHR linkage</span></div>
+        </article>
+
+        <article class="card">
+          <h3>MRI–ECG cross-modal learning for atrial substrate</h3>
+          <p>Contrastive alignment of ECG and cardiac MRI representations for post-ablation fibrosis and left-atrial remodeling.</p>
+          <ul>
+            <li>Patient-held-out evaluation with probes for leakage and patient-identity shortcuts.</li>
+          </ul>
+          <div class="tags"><span class="tag">Contrastive learning</span><span class="tag">Multimodal</span><span class="tag">MRI</span></div>
+        </article>
+
+        <article class="card">
+          <h3>Spatial transcriptomics of AF and ablation</h3>
+          <p>Visium HD analysis of human left-atrial tissue across non-AF, AF, and ablated samples.</p>
+          <ul>
+            <li>cell2location deconvolution, spatially variable genes, pathway enrichment, CellChat signaling.</li>
+            <li>Recovery-associated gene programs and fibrotic border zones.</li>
+          </ul>
+          <div class="tags"><span class="tag">Visium HD</span><span class="tag">cell2location</span><span class="tag">CellChat</span></div>
+        </article>
+      </div>
+
+      <h3 class="sub">Statistical methods</h3>
+      <div class="grid">
+        <article class="card">
+          <h3>Instrumental variables with semi-competing risks</h3>
+          <p>A counting-process framework for causal effects on disease onset, death before onset, and post-onset death, using weighted entry balance.</p>
+          <ul>
+            <li>Identification and large-sample theory; recursive estimators and simulations.</li>
+            <li>Applied to REACHnet comparative-safety data.</li>
+          </ul>
+          <div class="tags"><span class="tag">Causal inference</span><span class="tag">Survival</span></div>
+        </article>
+        <article class="card">
+          <h3>Composite-score regression and component adjustment</h3>
+          <p>Equivalence conditions, sensitivity bounds, and residual-variance diagnostics for interpreting composite-score coefficients.</p>
+          <ul>
+            <li>Nine simulation designs (2,700 samples) and 3,956 REACHnet admissions.</li>
+          </ul>
+          <div class="tags"><span class="tag">Epidemiologic methods</span><span class="tag">Simulation</span></div>
+        </article>
+        <article class="card">
+          <h3>Neural-network dynamic prediction for interval-censored data</h3>
+          <p>Multivariate functional PCA with neural networks for dynamic risk prediction from time-varying covariates.</p>
+          <div class="metric"><b>AUC 0.93</b><b>Brier 0.024</b><b>ADNI</b></div>
+          <p>Published in <em>Statistics in Medicine</em> (2025), with a Shiny app for personalized prediction.</p>
+          <div class="tags"><span class="tag">Functional PCA</span><span class="tag">Neural networks</span><span class="tag">R Shiny</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head"><h2>Experience</h2></div>
+      <ul class="timeline">
+        <li>
+          <div class="when">Current</div>
+          <div>
+            <h3>Research Assistant</h3>
+            <div class="org">TRIAD · Tulane University School of Medicine</div>
+            <p>Digital health AI for atrial fibrillation and heart failure: ECG foundation models, wearable PPG, multimodal learning, and spatial transcriptomics.</p>
+          </div>
+        </li>
+        <li>
+          <div class="when">Current</div>
+          <div>
+            <h3>Statistical Student Editor</h3>
+            <div class="org">American Journal of Public Health (AJPH)</div>
+            <p>Evaluate statistical methods, study design, model assumptions, and uncertainty reporting in submitted manuscripts; assess author responses to review.</p>
+          </div>
+        </li>
+        <li>
+          <div class="when">Oct 2022 – Jan 2023</div>
+          <div>
+            <h3>Machine Learning Intern</h3>
+            <div class="org">Deepwise · Beijing, China</div>
+            <p>Reviewed AI methods for clinical imaging; preprocessed brain MRI (pixel conversion, resampling); contributed to research writing.</p>
+          </div>
+        </li>
+        <li>
+          <div class="when">Jun 2022 – Sep 2022</div>
+          <div>
+            <h3>Data Analytics Intern</h3>
+            <div class="org">WuXi Biologics · Shanghai, China</div>
+            <p>Annotated antibody datasets, built an annotation dictionary, and trained a ProteinBERT-based sequence model with 87% prediction accuracy.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-head"><h2>Education</h2></div>
+      <ul class="timeline">
+        <li>
+          <div class="when">2024 – Present</div>
+          <div>
+            <h3>Ph.D., Biostatistics and Data Science</h3>
+            <div class="org">Tulane University</div>
+            <p>Statistical Inference, Bayesian Inference, Categorical Data Analysis, Clinical Trials, Epidemiologic Methods</p>
+          </div>
+        </li>
+        <li>
+          <div class="when">2021 – 2024</div>
+          <div>
+            <h3>M.S., Epidemiology and Health Statistics</h3>
+            <div class="org">Renmin University of China</div>
+            <p>Survival Analysis, Causal Inference, Multivariate Analysis, GLMs, Statistical Computing</p>
+          </div>
+        </li>
+        <li>
+          <div class="when">2017 – 2021</div>
+          <div>
+            <h3>B.S., Marine Pharmacy</h3>
+            <div class="org">China Pharmaceutical University</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PUBLICATIONS ================= -->
+  <section id="publications">
+    <div class="wrap">
+      <div class="sec-head"><h2>Publications</h2></div>
+      <ul class="pubs">
+        <li>
+          <div class="title"><a href="https://doi.org/10.1002/sim.70190" target="_blank" rel="noopener">Neural network-based dynamic prediction for interval-censored data with time-varying covariates</a></div>
+          <div class="meta"><span class="me">Liu, K.</span>, Zu, Y., Yi, D., Ding, Y., Sun, T. · <em>Statistics in Medicine</em>, 2025</div>
+        </li>
+        <li>
+          <div class="title"><a href="https://doi.org/10.3389/fonc.2023.1194673" target="_blank" rel="noopener">Relationships between fatigue experience and psychological indicators among Chinese cancer survivors</a></div>
+          <div class="meta">Gu, S., Xu, Y., Zhu, X., Lam, A., Gong, L., Wang, J., Guo, X., Fu, L., Shi, J., <span class="me">Liu, K.</span>, Yi, D. · <em>Frontiers in Oncology</em>, 2023</div>
+        </li>
+        <li>
+          <div class="title"><span class="badge">In prep</span>AI-enabled echocardiography triage of left ventricular ejection fraction from portable single-lead electrocardiograms in patients with atrial fibrillation: DECAAF II</div>
+        </li>
+        <li>
+          <div class="title"><span class="badge">In prep</span>Instrumental variables estimation with semi-competing risks: a counting-process approach under weighted entry balance</div>
+        </li>
+        <li>
+          <div class="title"><span class="badge">In prep</span>When does adjustment for a composite-score component remove its points? A diagnostic framework for epidemiologic regression</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS & LANGUAGES ================= -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head"><h2>Skills &amp; Languages</h2></div>
+      <div class="skills">
+        <div class="card">
+          <h3>Programming</h3>
+          <div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">SAS</span><span class="tag">PyTorch</span><span class="tag">Git</span><span class="tag">Linux</span><span class="tag">R Shiny</span><span class="tag">SPSS</span></div>
+        </div>
+        <div class="card">
+          <h3>Machine learning</h3>
+          <div class="tags"><span class="tag">Foundation-model embeddings</span><span class="tag">Transformers</span><span class="tag">Multitask learning</span><span class="tag">Contrastive learning</span><span class="tag">Cross-modal learning</span></div>
+        </div>
+        <div class="card">
+          <h3>Statistics</h3>
+          <div class="tags"><span class="tag">Survival &amp; interval-censored data</span><span class="tag">Semi-competing risks</span><span class="tag">Causal inference / IV</span><span class="tag">Bayesian inference</span><span class="tag">Functional PCA</span><span class="tag">GLMs</span><span class="tag">Simulation &amp; bootstrap</span></div>
+        </div>
+        <div class="card">
+          <h3>Biomedical data</h3>
+          <div class="tags"><span class="tag">ECG / PPG signal processing</span><span class="tag">Nested cross-validation</span><span class="tag">Calibration</span><span class="tag">Decision curves</span><span class="tag">Spatial transcriptomics</span></div>
+        </div>
+        <div class="card">
+          <h3>Languages</h3>
+          <div class="lang" role="list">
+            <div class="lang-row" role="listitem"><span>Mandarin</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="lvl">Native</span></div>
+            <div class="lang-row" role="listitem"><span>English</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="lvl">Fluent</span></div>
+            <div class="lang-row" role="listitem"><span>Spanish</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="lvl">Beginner</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OUTDOORS ================= -->
+  <section id="outdoors">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Beyond the lab</h2>
+        <p>When I'm not modeling heart rhythms, I'm usually raising my own: on roads, trails, rock, and mountains.</p>
+      </div>
+      <div class="hobbies">
+        <figure class="hobby h-trail">
+          <img src="assets/img/trail-running.jpg" alt="Kexin running down a misty mountain trail during a race, wearing a race bib and carrying trekking poles" loading="lazy" width="1067" height="1600">
+          <figcaption>
+            <h3>Trail running</h3>
+            <p>Mountain races with poles, fog, and plenty of mud.</p>
+            <div class="chips"><span>Longest race · Chongli 50K</span></div>
+          </figcaption>
+        </figure>
+        <figure class="hobby h-summit">
+          <img src="assets/img/mountaineering.jpg" alt="Kexin on the icy summit of Cotopaxi holding an ice axe, with a sea of clouds and mountain ridges behind" loading="lazy" width="1600" height="1200">
+          <figcaption>
+            <h3>Mountaineering</h3>
+            <p>Summit morning on Cotopaxi, Ecuador, above the clouds.</p>
+            <ul class="chips" aria-label="Summits">
+              <li>Cotopaxi · 5,897 m</li>
+              <li>Nochma Peak · 5,588 m</li>
+              <li>Siguniangshan Erfeng · 5,276 m</li>
+              <li>Yiyangjiabo · 5,221 m</li>
+            </ul>
+          </figcaption>
+        </figure>
+        <div class="hobby h-marathon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4M12 2v3"/></svg>
+          <div>
+            <h3>Road running</h3>
+            <div class="pbs">
+              <div><div class="big">4h 27m</div><span>Marathon PB</span></div>
+              <div><div class="big">1h 49m</div><span>Half marathon PB</span></div>
+            </div>
+            <p>Long training blocks, steady pacing, and patience over the full distance.</p>
+          </div>
+        </div>
+        <figure class="hobby h-climb">
+          <img src="assets/img/climbing.jpg" alt="Kexin bouldering on a large rock face beside the sea" loading="lazy" width="1206" height="672">
+          <figcaption><h3>Rock climbing</h3><p>Bouldering on real rock, preferably with an ocean view.</p></figcaption>
+        </figure>
+        <div class="hobby h-note">
+          <p>Endurance sports taught me what good research needs too: consistent training, honest pacing, and reading conditions before committing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Get in touch</h2>
+        <p>I'm looking for Summer 2027 internships in digital health AI/ML and biostatistics. I'd love to hear from you.</p>
+      </div>
+      <div class="contact">
+        <a class="btn primary" href="mailto:kliu15@tulane.edu">kliu15@tulane.edu</a>
+        <a class="btn" href="https://www.linkedin.com/in/kexin-liu-b0515134b/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/liuketan" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="assets/Kexin_Liu_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Kexin Liu · New Orleans, LA</div>
+</footer>
+
+<script>
+  // Theme: remembered per visitor; storage may be unavailable (private mode), so guard every access.
+  const root = document.documentElement;
+  try { const saved = localStorage.getItem("theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById("menuBtn");
+  const links = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", () => {
+    const open = links.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
+  });
+  links.addEventListener("click", e => {
+    if (e.target.tagName === "A") { links.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false); }
+  });
+
+  // Highlight the nav link for the section in view
+  const navA = [...links.querySelectorAll("a")];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) navA.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("main section[id]").forEach(s => obs.observe(s));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
